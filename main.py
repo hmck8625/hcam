@@ -28,7 +28,7 @@ def load_data():
     
     response_sheet1 = requests.get(url_sheet1)
     data_sheet1 = response_sheet1.json()
-    st.title(ロード完了)
+    st.title("ロードエンド")
     # シート1のデータをPandas DataFrameに変換
     # シート1はカラム名が12行目にあるため、最初の11行をスキップ
     df_sheet1 = pd.DataFrame(data_sheet1['values'][12:])
