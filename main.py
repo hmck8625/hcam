@@ -24,11 +24,11 @@ logging.debug('デバッグメッセージがここに出ます')
 def load_data():
     # シート1のデータを読み込む
     API_KEY = st.secrets["API_KEY"]
-    st.title(API_KEY)
     url_sheet1 = f"https://sheets.googleapis.com/v4/spreadsheets/{SPREADSHEET_ID}/values/{SHEET1_NAME}?key={API_KEY}"
-    st.title(url_sheet1)
+    
     response_sheet1 = requests.get(url_sheet1)
     data_sheet1 = response_sheet1.json()
+    st.title(ロード完了)
     # シート1のデータをPandas DataFrameに変換
     # シート1はカラム名が12行目にあるため、最初の11行をスキップ
     df_sheet1 = pd.DataFrame(data_sheet1['values'][12:])
