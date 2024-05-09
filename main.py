@@ -7,12 +7,19 @@ import plotly.graph_objects as go
 import numpy as np
 import openai 
 import os
+import logging
 
 
 # APIキーとスプレッドシートID、シート名を設定
 
 SPREADSHEET_ID = '1gvWMXKEEL8OiZlevD3FwmW1b5-lQFlMR_uCv4NvrlDo'
 SHEET1_NAME = '過去（実績）'
+
+# ロギングの設定
+logging.basicConfig(filename='app.log', level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
+
+# ロギングの例
+logging.debug('デバッグメッセージがここに出ます')
 
 def load_data():
     # シート1のデータを読み込む
@@ -21,7 +28,6 @@ def load_data():
     url_sheet1 = f"https://sheets.googleapis.com/v4/spreadsheets/{SPREADSHEET_ID}/values/{SHEET1_NAME}?key={API_KEY}"
     response_sheet1 = requests.get(url_sheet1)
     data_sheet1 = response_sheet1.json()
-    st.title(data_sheet1)
     # シート1のデータをPandas DataFrameに変換
     # シート1はカラム名が12行目にあるため、最初の11行をスキップ
     df_sheet1 = pd.DataFrame(data_sheet1['values'][12:])
