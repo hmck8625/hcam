@@ -16,7 +16,8 @@ SHEET1_NAME = '過去（実績）'
 
 def load_data():
     # シート1のデータを読み込む
-    API_KEY = st.secrets["API_KEY"]
+    API_KEY = 'AIzaSyBP9qP9XZh1Nm2jsi_MvcWKmTaVNM6F-7A'
+    #API_KEY = st.secrets["API_KEY"]
     url_sheet1 = f"https://sheets.googleapis.com/v4/spreadsheets/{SPREADSHEET_ID}/values/{SHEET1_NAME}?key={API_KEY}"
     response_sheet1 = requests.get(url_sheet1)
     data_sheet1 = response_sheet1.json()
