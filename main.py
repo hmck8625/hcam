@@ -6,18 +6,17 @@ import altair as alt
 import plotly.graph_objects as go
 import numpy as np
 from openai import OpenAI
-
 import os
 
 
 # APIキーとスプレッドシートID、シート名を設定
-API_KEY = 'AIzaSyBP9qP9XZh1Nm2jsi_MvcWKmTaVNM6F-7A'
+
 SPREADSHEET_ID = '1gvWMXKEEL8OiZlevD3FwmW1b5-lQFlMR_uCv4NvrlDo'
 SHEET1_NAME = '過去（実績）'
 
-
 def load_data():
     # シート1のデータを読み込む
+    API_KEY = st.secrets["API_KEY"]
     url_sheet1 = f"https://sheets.googleapis.com/v4/spreadsheets/{SPREADSHEET_ID}/values/{SHEET1_NAME}?key={API_KEY}"
     response_sheet1 = requests.get(url_sheet1)
     data_sheet1 = response_sheet1.json()
@@ -157,7 +156,7 @@ def analyze_midwork_hours(df, target_name, target_week, category):
 
 def openai_analyze(prompt):
 
-    client = OpenAI()
+    client = OpenAI(st.secrets["OPENAI_API_KEY"])
 
     messages = [
         {"role": "system", "content": prompt}
@@ -211,7 +210,7 @@ def main():
     data = plot_stacked_bar_chart(df, selected_name, '大項目')
     prompt = f"週単位の稼働時間のデータです。1.2を超えるとオーバーストレスのため労働時間を減らす必要があり、逆に１以下だとアンダーストレスのため成長機会が少ない状態です。データを確認し簡潔にコメントを返してください。#データ{data}"
     st.write(openai_analyze(prompt))
-    
+
     st.write('### 案件別')
     plot_stacked_bars_by_project(df, selected_name, '案件','実働工数')
     # 週別の積み上げ棒グラフを描画  
