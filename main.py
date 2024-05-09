@@ -26,6 +26,7 @@ def load_data():
     API_KEY = st.secrets["API_KEY"]
     st.title(API_KEY)
     url_sheet1 = f"https://sheets.googleapis.com/v4/spreadsheets/{SPREADSHEET_ID}/values/{SHEET1_NAME}?key={API_KEY}"
+    st.title(url_sheet1)
     response_sheet1 = requests.get(url_sheet1)
     data_sheet1 = response_sheet1.json()
     # シート1のデータをPandas DataFrameに変換
