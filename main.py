@@ -181,54 +181,6 @@ def openai_analyze(prompt):
 def main():
     st.title('HCAM')
 
-    # データの読み込み
-    df = load_data()
-
-    # ユニークな名前のリストを取得
-    unique_names = df['名前'].unique()
-
-    # サイドバーで名前を選択
-    selected_name = st.sidebar.selectbox('名前を選択', unique_names)
-
-    # 選択された名前でデータをフィルタリング
-    filtered_df = df[df['名前'] == selected_name]
-    # ユニークな週のリストを取得
-    unique_weeks = filtered_df['週'].unique()
-    # サイドバーで週を選択
-    selected_week = st.sidebar.selectbox('週を選択', unique_weeks)
-
-
-    # フィルタリングされたデータフレームの表示
-    # st.write(filtered_df)
-
-    # 選択された名前の実働工数の合計を表示
-    # total_work_hours = filtered_df['実働工数'].sum()
-    # st.write(f"{selected_name}の実働工数の合計: {total_work_hours}")
-
-    st.write('### 大項目別の実働工数')
-
-    data = plot_stacked_bar_chart(df, selected_name, '大項目')
-    prompt = f"週単位の稼働時間のデータです。1.2を超えるとオーバーストレスのため労働時間を減らす必要があり、逆に１以下だとアンダーストレスのため成長機会が少ない状態です。データを確認し簡潔にコメントを返してください。#データ{data}"
-    st.write(openai_analyze(prompt))
-
-    st.write('### 案件別')
-    plot_stacked_bars_by_project(df, selected_name, '案件','実働工数')
-    # 週別の積み上げ棒グラフを描画  
-    with st.expander('項目別工数推移'):
-      st.write('### 中項目別の実働工数')
-      plot_stacked_bar_chart(df, selected_name, '中項目')
-
-      st.write('### 小項目別の実働工数')
-      plot_stacked_bar_chart(df, selected_name, '小項目')
-
-    # 週別の中項目別実働工数比較を表示
-    
-    with st.expander('同じグレード対比'):
-      st.write('#### 中項目')
-      analyze_midwork_hours(df, selected_name, selected_week, '中項目')
-      st.write('#### 小項目')
-      analyze_midwork_hours(df, selected_name, selected_week, '小項目')
-
 
 if __name__ == '__main__':
     main()
