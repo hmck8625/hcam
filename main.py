@@ -52,14 +52,13 @@ def plot_stacked_bar_chart(df, name, category):
     # 指定された名前でデータをフィルタリング
     filtered_df = df[df['名前'] == name]
     
-
     # 週の形式を変更
     filtered_df['週'] = pd.to_datetime(filtered_df['週'], format='%Y-%m-%d')
     filtered_df['週'] = filtered_df['週'].dt.strftime('%Y-%m-%d')
     st.dataframe(filtered_df)
 
     # 週とカテゴリでグループ化し、実働工数を合計
-    grouped_df = filtered_df.groupby(['週', category])['実働工数'].sum().unstack().reset_index()
+    grouped_df = filtered_df.groupby(['週'])['実働工数'].sum().unstack().reset_index()
     st.dataframe(grouped_df)
 
     # 積み上げ棒グラフを描画
