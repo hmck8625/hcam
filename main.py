@@ -58,7 +58,8 @@ def plot_stacked_bar_chart(df, name, category):
     st.dataframe(filtered_df)
 
     # 週とカテゴリでグループ化し、実働工数を合計
-    grouped_df = filtered_df.groupby(['週'])['実働工数'].sum().unstack().reset_index()
+    grouped_df = filtered_df.groupby(['週', category])['実働工数'].sum().reset_index()
+
     st.dataframe(grouped_df)
 
     # 積み上げ棒グラフを描画
