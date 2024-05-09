@@ -28,7 +28,7 @@ def load_data():
     
     response_sheet1 = requests.get(url_sheet1)
     data_sheet1 = response_sheet1.json()
-    st.title("ロードエンド")
+  
     # シート1のデータをPandas DataFrameに変換
     # シート1はカラム名が12行目にあるため、最初の11行をスキップ
     df_sheet1 = pd.DataFrame(data_sheet1['values'][12:])
@@ -191,6 +191,7 @@ def main():
 
     # データの読み込み
     df = load_data()
+    st.dataframe(df)
 
     # ユニークな名前のリストを取得
     unique_names = df['名前'].unique()
