@@ -15,12 +15,6 @@ import logging
 SPREADSHEET_ID = '1gvWMXKEEL8OiZlevD3FwmW1b5-lQFlMR_uCv4NvrlDo'
 SHEET1_NAME = '過去（実績）'
 
-# ロギングの設定
-logging.basicConfig(filename='app.log', level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
-
-# ロギングの例
-logging.debug('デバッグメッセージがここに出ます')
-
 def load_data():
     # シート1のデータを読み込む
     API_KEY = st.secrets["API_KEY"]
@@ -57,14 +51,16 @@ def load_data():
 def plot_stacked_bar_chart(df, name, category):
     # 指定された名前でデータをフィルタリング
     filtered_df = df[df['名前'] == name]
-    st.dataframe(filtered_df)
+    
 
     # 週の形式を変更
     filtered_df['週'] = pd.to_datetime(filtered_df['週'], format='%Y-%m-%d')
     filtered_df['週'] = filtered_df['週'].dt.strftime('%Y-%m-%d')
+    st.dataframe(filtered_df)
 
     # 週とカテゴリでグループ化し、実働工数を合計
     grouped_df = filtered_df.groupby(['週', category])['実働工数'].sum().unstack().reset_index()
+    st.dataframe(grouped_df)
 
     # 積み上げ棒グラフを描画
     st.bar_chart(grouped_df, x='週', y=grouped_df.columns[1:].tolist())
@@ -192,7 +188,6 @@ def main():
 
     # データの読み込み
     df = load_data()
-    st.dataframe(df)
 
     # ユニークな名前のリストを取得
     unique_names = df['名前'].unique()
