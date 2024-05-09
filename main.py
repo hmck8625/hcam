@@ -57,6 +57,7 @@ def load_data():
 def plot_stacked_bar_chart(df, name, category):
     # 指定された名前でデータをフィルタリング
     filtered_df = df[df['名前'] == name]
+    st.dataframe(filtered_df)
 
     # 週の形式を変更
     filtered_df['週'] = pd.to_datetime(filtered_df['週'], format='%Y-%m-%d')
