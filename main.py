@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 import altair as alt
 import plotly.graph_objects as go
 import numpy as np
-from openai import OpenAI
+import openai
 import os
 import logging
 
@@ -160,14 +160,15 @@ def analyze_midwork_hours(df, target_name, target_week, category):
 
 def openai_analyze(prompt):
 
-    client = OpenAI(st.secrets["OPENAI_API_KEY"])
+
+    openai.api_key = st.secrets["OPENAI_API_KEY"]
 
     messages = [
         {"role": "system", "content": prompt}
     ]
 
    # ChatGPTへの問い合わせ
-    response = client.chat.completions.create(
+    response = openai.chat.completions.create(
         model="gpt-3.5-turbo",
         #model="ft:gpt-3.5-turbo-0125:personal:0429ab:9JJBZQ4v",
         #model="gpt-4-0125-preview",
