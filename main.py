@@ -212,7 +212,7 @@ def main():
 
     data = plot_stacked_bar_chart(df, selected_name, '大項目')
     prompt = f"週単位の稼働時間のデータです。1.2を超えるとオーバーストレスのため労働時間を減らす必要があり、逆に１以下だとアンダーストレスのため成長機会が少ない状態です。データを確認し簡潔にコメントを返してください。#データ{data}"
-    if st.sidebar.button('生成'):  # ボタンが押されたかどうかを確認
+    if st.sidebar.button('生成', key='generate_button_1'):
       st.write(openai_analyze(prompt))
 
     st.write('### 案件別')
@@ -229,7 +229,7 @@ def main():
     
     with st.expander('同じグレード対比'):
       st.write('#### 中項目')
-      if st.sidebar.button('生成'):  # ボタンが押されたかどうかを確認
+      if st.sidebar.button('生成', key='generate_button_2'):  # ボタンが押されたかどうかを確認
         st.write('テスト')  # ボタンが押された場合、「テスト」を表示
       analyze_midwork_hours(df, selected_name, selected_week, '中項目')
       st.write('#### 小項目')
