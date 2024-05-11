@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 import altair as alt
 import plotly.graph_objects as go
 import numpy as np
-import openai 
+from openai import OpenAI
 import os
 import logging
 
