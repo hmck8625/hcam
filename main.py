@@ -55,11 +55,9 @@ def plot_stacked_bar_chart(df, name, category):
     # 週の形式を変更
     filtered_df['週'] = pd.to_datetime(filtered_df['週'], format='%Y-%m-%d')
     filtered_df['週'] = filtered_df['週'].dt.strftime('%Y-%m-%d')
-    st.dataframe(filtered_df)
 
     # 週とカテゴリでグループ化し、実働工数を合計
     grouped_df = filtered_df.groupby(['週', category])['実働工数'].sum().unstack().reset_index()
-    st.dataframe(grouped_df)
 
     # 積み上げ棒グラフを描画
     st.bar_chart(grouped_df, x='週', y=grouped_df.columns[1:].tolist())
@@ -214,7 +212,8 @@ def main():
 
     data = plot_stacked_bar_chart(df, selected_name, '大項目')
     prompt = f"週単位の稼働時間のデータです。1.2を超えるとオーバーストレスのため労働時間を減らす必要があり、逆に１以下だとアンダーストレスのため成長機会が少ない状態です。データを確認し簡潔にコメントを返してください。#データ{data}"
-    st.write(openai_analyze(prompt))
+    if st.sidebar.button('生成'):  # ボタンが押されたかどうかを確認
+      st.write(openai_analyze(prompt))
 
     st.write('### 案件別')
     plot_stacked_bars_by_project(df, selected_name, '案件','実働工数')
@@ -230,6 +229,8 @@ def main():
     
     with st.expander('同じグレード対比'):
       st.write('#### 中項目')
+      if st.sidebar.button('生成'):  # ボタンが押されたかどうかを確認
+        st.write('テスト')  # ボタンが押された場合、「テスト」を表示
       analyze_midwork_hours(df, selected_name, selected_week, '中項目')
       st.write('#### 小項目')
       analyze_midwork_hours(df, selected_name, selected_week, '小項目')
