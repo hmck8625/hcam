@@ -168,7 +168,7 @@ def openai_analyze(prompt):
     ]
 
    # ChatGPTへの問い合わせ
-    response = openai.chat.completions.create(
+    response = openai.ChatCompletion.create(
         model="gpt-3.5-turbo",
         #model="ft:gpt-3.5-turbo-0125:personal:0429ab:9JJBZQ4v",
         #model="gpt-4-0125-preview",
